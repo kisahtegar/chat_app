@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "191168749897",
+    "project_id": "chatgram-app-f8c41",
+    "storage_bucket": "chatgram-app-f8c41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191168749897:android:9c3ec74a6b3eafec4ffa98",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191168749897-ilam5p3c7u85c69c357uc5piskso2hm1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEVI58OLwweshpg5bUTuiUe_93AHckDyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191168749897-ilam5p3c7u85c69c357uc5piskso2hm1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
