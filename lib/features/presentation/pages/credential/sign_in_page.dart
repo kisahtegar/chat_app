@@ -64,7 +64,13 @@ class _SignInPageState extends State<SignInPage> {
                   style: TextStyle(color: ColorConst().primaryColor),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      PageConst.signUpPage,
+                      (route) => false,
+                    );
+                  },
                   child: Text(
                     "Sign Up.",
                     style: TextStyle(

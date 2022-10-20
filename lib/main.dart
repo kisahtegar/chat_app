@@ -1,7 +1,7 @@
+import 'package:chat_app/on_generate_route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'features/presentation/pages/credential/sign_in_page.dart';
-import 'features/presentation/pages/credential/sign_up_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -24,7 +24,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      home: const SignUpPage(),
+      onGenerateRoute: OnGenerateRoute.route,
+      initialRoute: '/',
+      routes: {
+        "/": (context) {
+          return const SignInPage();
+        }
+      },
     );
   }
 }
