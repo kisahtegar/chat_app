@@ -263,7 +263,10 @@ class _HomePageState extends State<HomePage> {
                 sizeHor(15),
                 const Divider(thickness: 1, color: Colors.grey),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, PageConst.settingPage);
+                  },
                   contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                   leading: const Icon(
                     Icons.settings,
