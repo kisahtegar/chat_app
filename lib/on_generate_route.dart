@@ -1,3 +1,4 @@
+import 'package:chat_app/features/presentation/pages/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'const.dart';
 import 'features/presentation/pages/credential/sign_in_page.dart';
@@ -15,6 +16,10 @@ class OnGenerateRoute {
       case PageConst.signUpPage:
         {
           return routeBuilder(const SignUpPage());
+        }
+      case PageConst.settingPage:
+        {
+          return routeBuilder(const SettingPage());
         }
       default:
         {
