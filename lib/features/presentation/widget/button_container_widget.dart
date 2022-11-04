@@ -22,7 +22,7 @@ class ButtonContainerWidget extends StatelessWidget {
         height: 40,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(50),
         ),
         child: Center(
           child: Text(

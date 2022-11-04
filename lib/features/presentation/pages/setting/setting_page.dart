@@ -26,7 +26,7 @@ class _SettingPageState extends State<SettingPage> {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 20),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 18, 15, 43),
+                color: const Color.fromARGB(255, 18, 15, 43),
                 borderRadius: BorderRadius.circular(30),
               ),
               child: const ListTile(
