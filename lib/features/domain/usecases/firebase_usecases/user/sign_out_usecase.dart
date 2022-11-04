@@ -1,4 +1,3 @@
-import '../../../entities/user/user_entity.dart';
 import '../../../repositories/firebase_repository.dart';
 
 class SignOutUsecase {

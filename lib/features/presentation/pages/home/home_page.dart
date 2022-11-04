@@ -1,5 +1,4 @@
 import 'package:chat_app/const.dart';
-import 'package:chat_app/features/presentation/widget/form_container_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -80,14 +79,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          // spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(6, 6),
-                        ),
-                      ],
                     ),
                     child: const Padding(
                       padding: EdgeInsets.only(
