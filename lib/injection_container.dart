@@ -1,23 +1,24 @@
-import 'package:chat_app/features/data/data_sources/remote_data_source/firebase_remote_data_source.dart';
-import 'package:chat_app/features/data/data_sources/remote_data_source/firebase_remote_data_source_impl.dart';
-import 'package:chat_app/features/data/repositories/firebase_repository_impl.dart';
-import 'package:chat_app/features/domain/repositories/firebase_repository.dart';
-import 'package:chat_app/features/domain/usecases/firebase_usecases/user/create_user_usecase.dart';
-import 'package:chat_app/features/domain/usecases/firebase_usecases/user/get_current_uid_usecase.dart';
-import 'package:chat_app/features/domain/usecases/firebase_usecases/user/get_single_users_usecase.dart';
-import 'package:chat_app/features/domain/usecases/firebase_usecases/user/get_users_usecase.dart';
-import 'package:chat_app/features/domain/usecases/firebase_usecases/user/is_sign_in_usecase.dart';
-import 'package:chat_app/features/domain/usecases/firebase_usecases/user/sign_in_user_usecase.dart';
-import 'package:chat_app/features/domain/usecases/firebase_usecases/user/sign_out_usecase.dart';
-import 'package:chat_app/features/domain/usecases/firebase_usecases/user/sign_up_user_usecase.dart';
-import 'package:chat_app/features/domain/usecases/firebase_usecases/user/update_user_usecase.dart';
-import 'package:chat_app/features/presentation/cubit/auth/auth_cubit.dart';
-import 'package:chat_app/features/presentation/cubit/credential/credential_cubit.dart';
-import 'package:chat_app/features/presentation/cubit/user/get_single_users/get_single_user_cubit.dart';
-import 'package:chat_app/features/presentation/cubit/user/user_cubit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+
+import 'features/data/data_sources/remote_data_source/firebase_remote_data_source.dart';
+import 'features/data/data_sources/remote_data_source/firebase_remote_data_source_impl.dart';
+import 'features/data/repositories/firebase_repository_impl.dart';
+import 'features/domain/repositories/firebase_repository.dart';
+import 'features/domain/usecases/firebase_usecases/user/create_user_usecase.dart';
+import 'features/domain/usecases/firebase_usecases/user/get_current_uid_usecase.dart';
+import 'features/domain/usecases/firebase_usecases/user/get_single_user_usecase.dart';
+import 'features/domain/usecases/firebase_usecases/user/get_user_usecase.dart';
+import 'features/domain/usecases/firebase_usecases/user/is_sign_in_usecase.dart';
+import 'features/domain/usecases/firebase_usecases/user/sign_in_user_usecase.dart';
+import 'features/domain/usecases/firebase_usecases/user/sign_out_usecase.dart';
+import 'features/domain/usecases/firebase_usecases/user/sign_up_user_usecase.dart';
+import 'features/domain/usecases/firebase_usecases/user/update_user_usecase.dart';
+import 'features/presentation/cubit/auth/auth_cubit.dart';
+import 'features/presentation/cubit/credential/credential_cubit.dart';
+import 'features/presentation/cubit/user/get_single_users/get_single_user_cubit.dart';
+import 'features/presentation/cubit/user/user_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -39,20 +40,20 @@ Future<void> init() async {
   sl.registerFactory(
     () => UserCubit(
       updateUserUsecase: sl.call(),
-      getUsersUsecase: sl.call(),
+      getUserUsecase: sl.call(),
     ),
   );
   sl.registerFactory(
     () => GetSingleUserCubit(
-      getSingleUsersUsecase: sl.call(),
+      getSingleUserUsecase: sl.call(),
     ),
   );
 
   // usecases
   sl.registerLazySingleton(() => CreateUserUsecase(repository: sl.call()));
   sl.registerLazySingleton(() => GetCurrentUidUsecase(repository: sl.call()));
-  sl.registerLazySingleton(() => GetSingleUsersUsecase(repository: sl.call()));
-  sl.registerLazySingleton(() => GetUsersUsecase(repository: sl.call()));
+  sl.registerLazySingleton(() => GetSingleUserUsecase(repository: sl.call()));
+  sl.registerLazySingleton(() => GetUserUsecase(repository: sl.call()));
   sl.registerLazySingleton(() => IsSignInUsecase(repository: sl.call()));
   sl.registerLazySingleton(() => SignInUserUsecase(repository: sl.call()));
   sl.registerLazySingleton(() => SignOutUsecase(repository: sl.call()));

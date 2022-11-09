@@ -1,8 +1,9 @@
-import 'package:chat_app/features/presentation/pages/setting/setting_page.dart';
 import 'package:flutter/material.dart';
+
 import 'const.dart';
 import 'features/presentation/pages/credential/sign_in_page.dart';
 import 'features/presentation/pages/credential/sign_up_page.dart';
+import 'features/presentation/pages/setting/setting_page.dart';
 
 class OnGenerateRoute {
   static Route<dynamic>? route(RouteSettings settings) {

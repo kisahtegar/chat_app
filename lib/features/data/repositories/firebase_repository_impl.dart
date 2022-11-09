@@ -15,12 +15,12 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   Future<String> getCurrentUid() async => remoteDatasource.getCurrentUid();
 
   @override
-  Stream<List<UserEntity>> getSingleUsers(String uid) =>
+  Stream<List<UserEntity>> getSingleUser(String uid) =>
       remoteDatasource.getSingleUser(uid);
 
   @override
-  Stream<List<UserEntity>> getUsers(UserEntity userEntity) =>
-      remoteDatasource.getUsers(userEntity);
+  Stream<List<UserEntity>> getUser(UserEntity userEntity) =>
+      remoteDatasource.getUser(userEntity);
 
   @override
   Future<bool> isSignIn() async => remoteDatasource.isSignIn();

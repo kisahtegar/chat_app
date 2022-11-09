@@ -8,8 +8,8 @@ abstract class FirebaseRepository {
   Future<void> signOut();
 
   // USER
-  Stream<List<UserEntity>> getUsers(UserEntity userEntity);
-  Stream<List<UserEntity>> getSingleUsers(String uid);
+  Stream<List<UserEntity>> getUser(UserEntity userEntity);
+  Stream<List<UserEntity>> getSingleUser(String uid);
   Future<String> getCurrentUid();
   Future<void> createUser(UserEntity userEntity);
   Future<void> updateUser(UserEntity userEntity);

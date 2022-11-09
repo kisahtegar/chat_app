@@ -44,14 +44,14 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDatasource {
   Stream<List<UserEntity>> getSingleUser(String uid) {
     final userCollection = firebaseFirestore
         .collection(FirebaseConst.users)
-        .where(uid, isEqualTo: uid)
+        .where('uid', isEqualTo: uid)
         .limit(1);
     return userCollection.snapshots().map((querySnapshot) =>
         querySnapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList());
   }
 
   @override
-  Stream<List<UserEntity>> getUsers(UserEntity userEntity) {
+  Stream<List<UserEntity>> getUser(UserEntity userEntity) {
     final userCollection = firebaseFirestore.collection(FirebaseConst.users);
 
     return userCollection.snapshots().map((querySnapshot) =>
