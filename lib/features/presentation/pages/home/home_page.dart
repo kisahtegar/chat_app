@@ -1,8 +1,17 @@
-import 'package:chat_app/const.dart';
+import 'package:chat_app/features/presentation/cubit/auth/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../const.dart';
+import '../../cubit/user/get_single_users/get_single_user_cubit.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String uid;
+
+  const HomePage({
+    super.key,
+    required this.uid,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -12,127 +21,148 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorConst().backGroundColor,
-      appBar: AppBar(
-        backgroundColor: ColorConst().backGroundColor,
-        elevation: 0,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 6.0),
-          child: Icon(
-            Icons.account_circle,
-            size: 35,
-          ),
-        ),
-        title: const Text(
-          "Username",
-          style: TextStyle(
-            fontSize: 25,
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: InkWell(
-              onTap: () {
-                _openModalBottomSheet(context);
-              },
-              child: const Icon(
-                Icons.menu,
-                color: Colors.white,
-                size: 29,
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Search and add button
-            searchAddButton(),
-            sizeVer(20),
+  void initState() {
+    BlocProvider.of<GetSingleUserCubit>(context).getSingleUser(uid: widget.uid);
+    super.initState();
+  }
 
-            // Status
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: _subTitle("Status"),
-            ),
-            sizeVer(10),
-            SizedBox(
-              height: 160,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: 7,
-                separatorBuilder: (context, index) => sizeHor(10),
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 90,
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
-                        image: NetworkImage(
-                          'https://raw.githubusercontent.com/kisahtegar/Test-API/main/picture/naruto.png',
-                        ),
-                      ),
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(30),
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GetSingleUserCubit, GetSingleUserState>(
+      builder: (context, getSingleUserState) {
+        if (getSingleUserState is GetSingleUserLoaded) {
+          final currentUser = getSingleUserState.userEntity;
+          debugPrint('HomePage: getSingleUserState is GetSingleUserLoaded');
+          return Scaffold(
+            backgroundColor: ColorConst().backGroundColor,
+            appBar: AppBar(
+              backgroundColor: ColorConst().backGroundColor,
+              elevation: 0,
+              leading: const Padding(
+                padding: EdgeInsets.only(left: 6.0),
+                child: Icon(
+                  Icons.account_circle,
+                  size: 35,
+                ),
+              ),
+              title: Text(
+                "${currentUser.username}",
+                style: const TextStyle(
+                  fontSize: 25,
+                ),
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: InkWell(
+                    onTap: () {
+                      _openModalBottomSheet(context);
+                    },
+                    child: const Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                      size: 29,
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(
-                        top: 120,
-                        left: 10,
+                  ),
+                ),
+              ],
+            ),
+            body: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Search and add button
+                  searchAddButton(),
+                  sizeVer(20),
+
+                  // Status
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: _subTitle("Status"),
+                  ),
+                  sizeVer(10),
+                  SizedBox(
+                    height: 160,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 7,
+                      separatorBuilder: (context, index) => sizeHor(10),
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: 90,
+                          decoration: BoxDecoration(
+                            image: const DecorationImage(
+                              image: NetworkImage(
+                                'https://raw.githubusercontent.com/kisahtegar/Test-API/main/picture/naruto.png',
+                              ),
+                            ),
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.only(
+                              top: 120,
+                              left: 10,
+                            ),
+                            child: Text(
+                              "Username",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  sizeVer(20),
+
+                  // List chat
+                  const Divider(
+                    indent: 20,
+                    endIndent: 20,
+                    color: Colors.white,
+                    // thickness: 1,
+                  ),
+                  Container(
+                    // color: Colors.red,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: const ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Colors.white,
                       ),
-                      child: Text(
+                      title: Text(
                         "Username",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      subtitle: Text(
+                        "Join the conversation as ...",
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
             ),
-            sizeVer(20),
-
-            // List chat
-            const Divider(
-              indent: 20,
-              endIndent: 20,
-              color: Colors.white,
-              // thickness: 1,
-            ),
-            Container(
-              // color: Colors.red,
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: const ListTile(
-                leading: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                ),
-                title: Text(
-                  "Username",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: Text(
-                  "Join the conversation as ...",
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+          );
+        }
+        debugPrint('HomePage: getSingleUserState is GetSingleUserLoading');
+        return Center(
+          child: CircularProgressIndicator(
+            color: ColorConst().primaryColor,
+          ),
+        );
+      },
     );
   }
 
@@ -231,7 +261,7 @@ class _HomePageState extends State<HomePage> {
       ),
       builder: (context) {
         return Container(
-          height: 240,
+          height: 300,
           decoration: BoxDecoration(
             color: ColorConst().backGroundColor,
             borderRadius: const BorderRadius.only(
@@ -289,6 +319,25 @@ class _HomePageState extends State<HomePage> {
                   ),
                   title: const Text(
                     "About",
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    BlocProvider.of<AuthCubit>(context).loggedOut();
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      PageConst.signInPage,
+                      (route) => false,
+                    );
+                  },
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  leading: const Icon(
+                    Icons.exit_to_app,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    "Logout",
                     style: TextStyle(color: Colors.white, fontSize: 17),
                   ),
                 ),

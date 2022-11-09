@@ -8,7 +8,7 @@ abstract class FirebaseRemoteDatasource {
   Future<void> signOut();
 
   // User
-  Stream<List<UserEntity>> getUsers(UserEntity userEntity);
+  Stream<List<UserEntity>> getUser(UserEntity userEntity);
   Stream<List<UserEntity>> getSingleUser(String uid);
   Future<String> getCurrentUid();
   Future<void> createUser(UserEntity userEntity);

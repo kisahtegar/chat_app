@@ -11,6 +11,7 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
+    debugPrint('PageRoute: SettingPage');
     return Scaffold(
       backgroundColor: ColorConst().backGroundColor,
       appBar: AppBar(
