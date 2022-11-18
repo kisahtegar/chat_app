@@ -213,6 +213,9 @@ class _SignUpPageState extends State<SignUpPage> {
             username: _usernameController.text,
             email: _emailController.text,
             password: _passwordController.text,
+            bio: "",
+            name: "",
+            profileUrl: "",
           ),
         )
         .then((_) => _clear());

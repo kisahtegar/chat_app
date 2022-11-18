@@ -1,3 +1,5 @@
+import 'package:chat_app/features/domain/entities/user/user_entity.dart';
+import 'package:chat_app/features/presentation/pages/setting/edit_profile_page.dart';
 import 'package:flutter/material.dart';
 
 import 'const.dart';
@@ -7,7 +9,7 @@ import 'features/presentation/pages/setting/setting_page.dart';
 
 class OnGenerateRoute {
   static Route<dynamic>? route(RouteSettings settings) {
-    // final args = settings.arguments;
+    final args = settings.arguments;
 
     switch (settings.name) {
       case PageConst.signInPage:
@@ -20,7 +22,19 @@ class OnGenerateRoute {
         }
       case PageConst.settingPage:
         {
-          return routeBuilder(const SettingPage());
+          if (args is String) {
+            return routeBuilder(SettingPage(uid: args));
+          } else {
+            return routeBuilder(const NoPageFound());
+          }
+        }
+      case PageConst.editProfilePage:
+        {
+          if (args is UserEntity) {
+            return routeBuilder(EditProfilePage(currentUser: args));
+          } else {
+            return routeBuilder(const NoPageFound());
+          }
         }
       default:
         {

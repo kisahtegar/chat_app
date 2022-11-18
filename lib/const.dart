@@ -22,6 +22,7 @@ class PageConst {
   static const String signInPage = 'signInPage';
   static const String signUpPage = 'signUpPage';
   static const String settingPage = 'settingPage';
+  static const String editProfilePage = 'editProfilePage';
 }
 
 // Firebase DB
