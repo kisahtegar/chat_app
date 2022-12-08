@@ -1,4 +1,6 @@
+import 'package:chat_app/features/domain/entities/user/user_entity.dart';
 import 'package:chat_app/features/presentation/cubit/auth/auth_cubit.dart';
+import 'package:chat_app/features/presentation/widget/profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,21 +34,21 @@ class _HomePageState extends State<HomePage> {
       builder: (context, getSingleUserState) {
         if (getSingleUserState is GetSingleUserLoaded) {
           final currentUser = getSingleUserState.userEntity;
-          debugPrint('HomePage: getSingleUserState is GetSingleUserLoaded');
+          debugPrint("HomePage: currentUser($currentUser)");
           return Scaffold(
             backgroundColor: ColorConst().backGroundColor,
             appBar: AppBar(
               backgroundColor: ColorConst().backGroundColor,
               elevation: 0,
-              leading: const Padding(
-                padding: EdgeInsets.only(left: 6.0),
-                child: Icon(
-                  Icons.account_circle,
-                  size: 35,
+              leading: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: profileWidget(imageUrl: currentUser.profileUrl),
                 ),
               ),
               title: Text(
-                "${currentUser.username}",
+                "${currentUser.name == "" ? currentUser.username : currentUser.name}",
                 style: const TextStyle(
                   fontSize: 25,
                 ),
@@ -56,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(right: 10.0),
                   child: InkWell(
                     onTap: () {
-                      _openModalBottomSheet(context);
+                      _openModalBottomSheet(context, currentUser);
                     },
                     child: const Icon(
                       Icons.menu,
@@ -74,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Search and add button
-                  searchAddButton(),
+                  _searchAddButton(),
                   sizeVer(20),
 
                   // Status
@@ -156,7 +158,6 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         }
-        debugPrint('HomePage: getSingleUserState is GetSingleUserLoading');
         return Center(
           child: CircularProgressIndicator(
             color: ColorConst().primaryColor,
@@ -177,7 +178,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Row searchAddButton() {
+  Row _searchAddButton() {
     return Row(
       children: [
         // Search widget
@@ -252,7 +253,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   // showModalBottomSheet()
-  Future<dynamic> _openModalBottomSheet(BuildContext context) {
+  Future<dynamic> _openModalBottomSheet(
+      BuildContext context, UserEntity currentUser) {
+    // final UserEntity currentUsers;
+
     return showModalBottomSheet(
       context: context,
       backgroundColor: ColorConst().backGroundColor,
@@ -286,7 +290,11 @@ class _HomePageState extends State<HomePage> {
                 ListTile(
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushNamed(context, PageConst.settingPage);
+                    Navigator.pushNamed(
+                      context,
+                      PageConst.settingPage,
+                      arguments: widget.uid,
+                    );
                   },
                   contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                   leading: const Icon(

@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 
 import 'features/data/data_sources/remote_data_source/firebase_remote_data_source.dart';
 import 'features/data/data_sources/remote_data_source/firebase_remote_data_source_impl.dart';
 import 'features/data/repositories/firebase_repository_impl.dart';
 import 'features/domain/repositories/firebase_repository.dart';
+import 'features/domain/usecases/firebase_usecases/storage/upload_image_to_storage_usecase.dart';
 import 'features/domain/usecases/firebase_usecases/user/create_user_usecase.dart';
 import 'features/domain/usecases/firebase_usecases/user/get_current_uid_usecase.dart';
 import 'features/domain/usecases/firebase_usecases/user/get_single_user_usecase.dart';
@@ -49,7 +51,7 @@ Future<void> init() async {
     ),
   );
 
-  // usecases
+  // Usecases User
   sl.registerLazySingleton(() => CreateUserUsecase(repository: sl.call()));
   sl.registerLazySingleton(() => GetCurrentUidUsecase(repository: sl.call()));
   sl.registerLazySingleton(() => GetSingleUserUsecase(repository: sl.call()));
@@ -60,7 +62,11 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SignUpUserUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => UpdateUserUsecase(repository: sl.call()));
 
-  // repositories
+  // Usecases Storage
+  sl.registerLazySingleton(
+      () => UploadImageToStorageUsecase(repository: sl.call()));
+
+  // Repositories
   sl.registerLazySingleton<FirebaseRepository>(
     () => FirebaseRepositoryImpl(
       remoteDatasource: sl.call(),
@@ -72,13 +78,16 @@ Future<void> init() async {
     () => FirebaseRemoteDataSourceImpl(
       firebaseFirestore: sl.call(),
       firebaseAuth: sl.call(),
+      firebaseStorage: sl.call(),
     ),
   );
 
   // Externals
   final firebaseFirestore = FirebaseFirestore.instance;
   final firebaseAuth = FirebaseAuth.instance;
+  final firebaseStorage = FirebaseStorage.instance;
 
   sl.registerLazySingleton(() => firebaseFirestore);
   sl.registerLazySingleton(() => firebaseAuth);
+  sl.registerLazySingleton(() => firebaseStorage);
 }
